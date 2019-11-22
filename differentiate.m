@@ -1,6 +1,7 @@
 function[df]=differentiate(func,x,TOL)
     nn=length(x);
-    df=splitapply(partdiff,func,x',1:nn,TOL,1:nn);
+    pdiff = @(i) partdiff(func, x, i, TOL);
+    df=arrayfun(pdiff,1:nn);
 end
 function[dfi]=partdiff(func,x,i,TOL)
     eps=0.1;

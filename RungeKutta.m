@@ -38,7 +38,7 @@ classdef RungeKutta
                 zeroProblem = @(var) var-func(var);
                 [fixedPoint, hasConverged, iterations]=newtonSolver(zeroProblem, startPoint, 10^(-10), 10^6);
             end
-            [T,Y, iterations] = obj.implWithCustomSolver(solver,odefun,tspan,y0);
+            [T,Y, iterations] = obj.implWithCustomSolver(@solver,odefun,tspan,y0);
         end
         
         function [T,Y, iterations]=implWithSimplNewton(obj, odefun, tspan, y0)
@@ -46,9 +46,9 @@ classdef RungeKutta
             %fixed point equation of the implicit RK scheme
             function [fixedPoint, hasConverged, iterations]=solver(func, startPoint)
                 zeroProblem = @(var) var-func(var);
-                [fixedPoint, hasConverged, iterations]=SimplNewtonSolver(zeroProblem, startPoint, 10^(-10), 10^6);
+                [fixedPoint, hasConverged, iterations]=simplNewtonSolver(zeroProblem, startPoint, 10^(-10), 10^6);
             end
-            [T,Y, iterations] = obj.implWithCustomSolver(solver,odefun,tspan,y0);
+            [T,Y, iterations] = obj.implWithCustomSolver(@solver,odefun,tspan,y0);
         end
         
         function [T,Y, iterations]=implWithCustomSolver(obj, solver, odefun, tspan, y0)

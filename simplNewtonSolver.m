@@ -1,5 +1,5 @@
 function [fixedPoint, hasConverged, cycles] = simplNewtonSolver(func, startPoint, TOL, patience)
-    df=differentiate(func,startPoint);
+    df=numericDiff(func,startPoint, 0.5*TOL);
     prev=startPoint-df\func(startPoint);
     prevDelta=norm(prev-startPoint, inf);
     

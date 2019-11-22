@@ -1,12 +1,12 @@
 function [fixedPoint, hasConverged, cycles] = newtonSolver(func, startPoint, TOL, patience)
-    df=differentiate(func,startPoint);
+    df=numericDiff(func,startPoint, 0.5*TOL);
     prev=startPoint-df\func(startPoint);
     prevDelta=norm(prev-startPoint, inf);
     
     cycles=1;
     
     while 1
-        df=differentiate(func,prev);
+        df=numericDiff(func,prev, 0.5*TOL);
         next=prev-df\func(prev);
         delta=norm(next-prev,inf);
         theta=min(delta/prevDelta, 0.9);
